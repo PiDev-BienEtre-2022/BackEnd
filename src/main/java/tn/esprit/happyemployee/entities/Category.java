@@ -1,4 +1,4 @@
-package tn.esprit.happyemployee.Model;
+package tn.esprit.happyemployee.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
