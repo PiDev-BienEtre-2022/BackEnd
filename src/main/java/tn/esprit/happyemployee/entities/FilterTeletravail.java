@@ -101,7 +101,7 @@ public class FilterTeletravail  implements Serializable {
 	private SortLogic sortLogic;
 	/****** End: when run filter *******/
 	
-	
+	public FilterTeletravail(){}
 
 
 	@Override
@@ -113,6 +113,7 @@ public class FilterTeletravail  implements Serializable {
 				+ ", nextRun=" + nextRun + ", sortLogic=" + sortLogic + "]";
 	}
 
+	
 	public FilterTeletravail(String nom, FilterPeriode eqPeriode, FilterType eqFilterType, long eqMetrique,
 			FilterPeriode epPeriode, FilterType epFilterType, long epMetrique, String urgFilter,
 			FilterCommit commitLogic, RunSchedule runSchedule, String runAt, Date lastRun, Date nextRun,

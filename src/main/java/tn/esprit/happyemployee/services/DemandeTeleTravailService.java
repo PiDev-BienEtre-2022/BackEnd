@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import tn.esprit.happyemployee.domain.enums.DemandeApprove;
 import tn.esprit.happyemployee.entities.DemandeTeleTravail;
 import tn.esprit.happyemployee.repositories.DemandeTeleTravailRepository;
 
@@ -15,13 +17,15 @@ public class DemandeTeleTravailService implements IDemandeTeleTravailService {
 	DemandeTeleTravailRepository demandeTeleTravailRepository;
 	
 	@Override
-	public Long getDemandeTeleTravail(DemandeTeleTravail demande) {
+	public Long addDemandeTeleTravail(DemandeTeleTravail demande) {
+		demande.setSystemApprove(DemandeApprove.waiting);
+		demande.setManagerApprove(DemandeApprove.waiting);
 		demandeTeleTravailRepository.save(demande);
 		return demande.getId();
 	}
 
 	@Override
-	public Long modifierDepartement(DemandeTeleTravail demande) {
+	public Long modifierDemandeTeleTravail(DemandeTeleTravail demande) {
 		demandeTeleTravailRepository.save(demande);
 		return demande.getId();
 	}

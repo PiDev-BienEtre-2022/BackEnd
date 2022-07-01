@@ -72,6 +72,8 @@ public class Equipe  implements Serializable {
 		this.departement = departement;
 	}
 
+	public Equipe(){}
+	
 	public Equipe(String nom, FilterTeletravail filtre) {
 		super();
 		this.nom = nom;

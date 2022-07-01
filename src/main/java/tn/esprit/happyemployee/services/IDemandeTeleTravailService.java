@@ -7,9 +7,9 @@ import tn.esprit.happyemployee.entities.FilterTeletravail;
 
 public interface IDemandeTeleTravailService {
 
-	Long getDemandeTeleTravail(DemandeTeleTravail demande);
+	Long addDemandeTeleTravail(DemandeTeleTravail demande);
 
-	Long modifierDepartement(DemandeTeleTravail demande);
+	Long modifierDemandeTeleTravail(DemandeTeleTravail demande);
 
 	void supprimerDemandeTeleTravail(Long demandeId);
 	

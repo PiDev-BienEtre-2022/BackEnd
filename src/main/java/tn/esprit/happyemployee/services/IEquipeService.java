@@ -7,11 +7,13 @@ public interface IEquipeService {
 
 	Long addEquipe(Equipe equipe);
 
-	Long modifierCours(Equipe equipe);
+	Long modifierEquipe(Equipe equipe);
 
 	void supprimerEquipe(Long equipeId);
 	
 	List<Equipe> getEquipes();
 	
 	Equipe getEquipeById(Long equipeId);
+	
+	void affecterEquipeADepartement(Long equipeId, Long departementId);
 }

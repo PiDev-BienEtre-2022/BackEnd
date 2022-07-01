@@ -60,6 +60,8 @@ private static final long serialVersionUID = 1L;
 	@Enumerated(EnumType.STRING)
 	private DemandeReason reason;
 
+	public DemandeTeleTravail() {}
+	
 	public DemandeTeleTravail(Date dateCreation, Date dateDemande, String noteEmp, String noteManager,
 			DemandeUrgency urgency, Boolean extra, DemandeApprove systemApprove, DemandeApprove managerApprove,
 			DemandeReason reason) {

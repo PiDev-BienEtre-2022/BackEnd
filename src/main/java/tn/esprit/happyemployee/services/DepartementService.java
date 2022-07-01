@@ -15,7 +15,7 @@ public class DepartementService implements IDepartementService {
 	DepartementRepository departementRepository;
 	
 	@Override
-	public Long getDepartement(Departement departement) {
+	public Long addDepartement(Departement departement) {
 		departementRepository.save(departement);
 		return departement.getId();
 	}
