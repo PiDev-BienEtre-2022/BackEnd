@@ -1,64 +1,46 @@
 package tn.esprit.happyemployee.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="evaluation")
-public class Evaluation {
+@Table(name = "evaluation")
+@EntityListeners(AuditingEntityListener.class)
+public class Evaluation implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String date;
+    private Date date;
     private float score;
     private String note;
+    private Boolean status;
 
-    /*@JsonBackReference
-    @OneToMany(mappedBy = "Goal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Goal> goals;
+    @JsonBackReference
+    @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Goal> goals;
 
-    public List<Goal> getGoals() {
-        return goals;
+    @Override
+    public String toString() {
+        return "Evaluation{" +
+                "id=" + id +
+                ", date=" + date +
+                ", score=" + score +
+                ", note='" + note + '\'' +
+                '}';
     }
 
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
-    }*/
-
-    public Evaluation() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public float getScore() {
-        return score;
-    }
-
-    public void setScore(float score) {
-        this.score = score;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
 }

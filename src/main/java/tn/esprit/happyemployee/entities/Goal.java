@@ -1,20 +1,33 @@
 package tn.esprit.happyemployee.entities;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="goal")
-public class Goal {
+@Table(name = "goal")
+@EntityListeners(AuditingEntityListener.class)
+public class Goal implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String Titre;
     private String description;
     private float percentage;
-    private int validate;
+    private Boolean validate;
+    private Boolean status;
 
-    /*@JoinColumn(name="ID_Category",referencedColumnName = "id")
+    @JoinColumn(name="ID_Category",referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category category;
 
@@ -22,48 +35,16 @@ public class Goal {
     @ManyToOne(optional = false)
     private Evaluation evaluation;
 
-    public Goal() {
-        this.category = new Category();
-        this.evaluation = new Evaluation();
-    }*/
 
-    public long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id=" + id +
+                ", Titre='" + Titre + '\'' +
+                ", description='" + description + '\'' +
+                ", percentage=" + percentage +
+                ", validate=" + validate +
+                '}';
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitre() {
-        return Titre;
-    }
-
-    public void setTitre(String titre) {
-        Titre = titre;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(float percentage) {
-        this.percentage = percentage;
-    }
-
-    public int getValidate() {
-        return validate;
-    }
-
-    public void setValidate(int validate) {
-        this.validate = validate;
-    }
 }

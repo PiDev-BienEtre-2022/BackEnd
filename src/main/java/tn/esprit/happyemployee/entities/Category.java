@@ -1,66 +1,53 @@
 package tn.esprit.happyemployee.entities;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import tn.esprit.happyemployee.domain.enums.Domain;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="category")
-public class Category {
+@Table(name = "category")
+@EntityListeners(AuditingEntityListener.class)
+public class Category implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String Nom;
     private float percentage;
 
-    /*@JsonBackReference
-    @OneToMany(mappedBy = "Goal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Goal> goals;
+    private Boolean status;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "Training",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Training> trainings;
 
-    public List<Goal> getGoals() {
-        return goals;
+    @Enumerated(EnumType.STRING)
+    private Domain domain;
+
+   @JsonIgnore
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Goal> goals;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Training> trainings;
+
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", Nom='" + Nom + '\'' +
+                ", percentage=" + percentage +
+                ", domain=" + domain +
+                '}';
     }
-
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
-    }
-
-    public List<Training> getTrainings() {
-        return trainings;
-    }
-
-    public void setTrainings(List<Training> trainings) {
-        this.trainings = trainings;
-    }*/
-
-    public Category() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return Nom;
-    }
-
-    public void setNom(String nom) {
-        Nom = nom;
-    }
-
-    public float getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(float percentage) {
-        this.percentage = percentage;
-    }
-
- }
+}
