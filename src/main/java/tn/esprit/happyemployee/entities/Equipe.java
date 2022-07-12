@@ -39,6 +39,9 @@ public class Equipe  implements Serializable {
     
     @ManyToOne
     Departement departement;
+    
+    @OneToMany(mappedBy="equipe")
+	private Set<User> users;
 
 	public long getId() {
 		return Id;
@@ -72,6 +75,8 @@ public class Equipe  implements Serializable {
 		this.departement = departement;
 	}
 
+	public Equipe(){}
+	
 	public Equipe(String nom, FilterTeletravail filtre) {
 		super();
 		this.nom = nom;

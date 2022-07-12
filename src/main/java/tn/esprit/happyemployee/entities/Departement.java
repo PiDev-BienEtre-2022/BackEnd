@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,7 @@ public class Departement  implements Serializable{
     @ManyToOne
     FilterTeletravail filtre;
     
+    @JsonIgnore
 	@OneToMany(mappedBy="departement")
 	private Set<Equipe> equipes;
 	
@@ -47,6 +49,8 @@ public class Departement  implements Serializable{
 	public String toString() {
 		return "Departement [Id=" + Id + ", nom=" + nom + ", filtre=" + filtre + ", equipes=" + equipes + "]";
 	}
+	
+	public Departement(){}
 
 	public Departement(String nom, FilterTeletravail filtre) {
 		super();
