@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -32,6 +35,26 @@ public class User {
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private Set<DemandeTeleTravail> demandes;
+	
+	@ManyToOne
+	Equipe equipe;
+	
+	public Equipe getEquipe() {
+		return equipe;
+	}
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
+	public Set<DemandeTeleTravail> getDemandes() {
+		return demandes;
+	}
+	public void setDemandes(Set<DemandeTeleTravail> demandes) {
+		this.demandes = demandes;
+	}
 	public User() {
 	}
 	public User(String username, String email, String password) {
