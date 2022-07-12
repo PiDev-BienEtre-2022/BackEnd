@@ -10,11 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,6 +62,10 @@ private static final long serialVersionUID = 1L;
 	
 	@Enumerated(EnumType.STRING)
 	private DemandeReason reason;
+	
+	@ManyToOne
+	@JsonIgnore
+	User user;
 
 	public DemandeTeleTravail() {}
 	
@@ -147,6 +154,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setManagerApprove(DemandeApprove managerApprove) {
 		this.managerApprove = managerApprove;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public DemandeReason getReason() {

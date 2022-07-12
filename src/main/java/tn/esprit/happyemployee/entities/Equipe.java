@@ -39,6 +39,9 @@ public class Equipe  implements Serializable {
     
     @ManyToOne
     Departement departement;
+    
+    @OneToMany(mappedBy="equipe")
+	private Set<User> users;
 
 	public long getId() {
 		return Id;

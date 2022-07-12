@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.happyemployee.entities.Departement;
 import tn.esprit.happyemployee.entities.Equipe;
+import tn.esprit.happyemployee.entities.User;
 import tn.esprit.happyemployee.repositories.DepartementRepository;
 import tn.esprit.happyemployee.repositories.EquipeRepository;
+import tn.esprit.happyemployee.repositories.UserRepository;
 
 @Service
 public class EquipeService implements IEquipeService {
@@ -17,6 +19,8 @@ public class EquipeService implements IEquipeService {
 	EquipeRepository equipeRepository;
 	@Autowired
 	DepartementRepository departementRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	@Override
 	public Long addEquipe(Equipe equipe) {
@@ -52,6 +56,16 @@ public class EquipeService implements IEquipeService {
 		if(departement != null && equipe != null ) {
 			equipe.setDepartement(departement);
 			equipeRepository.save(equipe);
+		}
+	}
+	
+	@Override
+	public void affecterUserAEquipe(Long userId, Long equipeId) {
+		User user = userRepository.findById(userId).get();
+		Equipe equipe = equipeRepository.findById(equipeId).get();	
+		if(user != null && equipe != null) {
+			user.setEquipe(equipe);
+			userRepository.save(user);
 		}
 	}
 

@@ -63,5 +63,12 @@ public class EquipeController {
 		equipeService.affecterEquipeADepartement(equipeId, departementId);
 		return "equipe affecté correctement";
 	}
+	
+	@PutMapping("/affecterUserAEquipe/{userId}/{equipeId}")
+	@ResponseBody
+	public String affecterUserAEquipe(@PathVariable("userId")  Long userId, @PathVariable("equipeId") Long equipeId) {
+		equipeService.affecterUserAEquipe(userId, equipeId);
+		return "user affecté correctement";
+	}
 }
 

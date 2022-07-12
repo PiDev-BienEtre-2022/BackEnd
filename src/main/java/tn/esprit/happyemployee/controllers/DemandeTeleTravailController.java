@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.happyemployee.entities.DemandeTeleTravail;
+import tn.esprit.happyemployee.entities.User;
+import tn.esprit.happyemployee.repositories.UserRepository;
 import tn.esprit.happyemployee.services.IDemandeTeleTravailService;
 
 
@@ -21,11 +23,14 @@ public class DemandeTeleTravailController {
 
 	@Autowired
 	IDemandeTeleTravailService demandeTeleTravailService;
+	
+	@Autowired
+	UserRepository userRepository;
 
-	@PostMapping("/ajouterDemande")
+	@PostMapping("/ajouterDemande/{userId}")
 	@ResponseBody
-	public DemandeTeleTravail ajouterDemande(@RequestBody DemandeTeleTravail demande) {
-		demandeTeleTravailService.addDemandeTeleTravail(demande);
+	public DemandeTeleTravail ajouterDemande(@PathVariable("userId") Long userId,@RequestBody DemandeTeleTravail demande) {
+		demandeTeleTravailService.addDemandeTeleTravail(demande, userId);
 		return demande;
 	}
 
@@ -55,5 +60,13 @@ public class DemandeTeleTravailController {
 	public DemandeTeleTravail getDemande(@PathVariable("demandeId") Long demandeId) {
 
 		return  demandeTeleTravailService.getDemandeTeleTravailById(demandeId);
+	}
+	
+	@GetMapping("/getDemandesByUser/{userId}")
+	@ResponseBody
+	public  List<DemandeTeleTravail> getDemandeByUser(@PathVariable("userId") Long userId) {
+
+		
+		return  demandeTeleTravailService.getDemandebyUser(userId);
 	}
 }

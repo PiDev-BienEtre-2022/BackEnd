@@ -16,4 +16,6 @@ public interface IEquipeService {
 	Equipe getEquipeById(Long equipeId);
 	
 	void affecterEquipeADepartement(Long equipeId, Long departementId);
+	
+	void affecterUserAEquipe(Long userId, Long equipeId);
 }
