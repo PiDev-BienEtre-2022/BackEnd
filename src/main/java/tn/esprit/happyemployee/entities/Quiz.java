@@ -1,6 +1,13 @@
 package tn.esprit.happyemployee.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -11,11 +18,15 @@ import javax.persistence.*;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long idQuiz;
+    @NotBlank
     private String Nom;
-    // key etrangé question
+    @OneToMany(mappedBy = "quiz")
+    private Set<Questions> questions;
+    @OneToMany(mappedBy = "quiz")
+    private Set<Reponses> reponses;
 
-    //list des questions
+    //clé employé?
 
     //maybe levelquiz set here
 }
