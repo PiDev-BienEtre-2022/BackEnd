@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,9 +43,11 @@ public class FilterTeletravail  implements Serializable {
     private String nom;
     
     /****** Start:  For who *******/
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Equipe> equipes;
 	
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Departement> departements;
 	
