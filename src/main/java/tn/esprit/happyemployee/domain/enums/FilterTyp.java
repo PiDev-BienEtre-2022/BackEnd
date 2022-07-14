@@ -1,6 +1,6 @@
 package tn.esprit.happyemployee.domain.enums;
 
-public enum FilterType {
+public enum FilterTyp {
 	fstatic,
 	fdynamic
 }

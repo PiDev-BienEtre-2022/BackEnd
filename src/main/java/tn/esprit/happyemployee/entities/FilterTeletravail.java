@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
@@ -17,8 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +27,6 @@ import tn.esprit.happyemployee.domain.enums.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "filterTeletravail")
 @EntityListeners(AuditingEntityListener.class)
@@ -43,9 +42,11 @@ public class FilterTeletravail  implements Serializable {
     private String nom;
     
     /****** Start:  For who *******/
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Equipe> equipes;
 	
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Departement> departements;
 	
@@ -58,7 +59,7 @@ public class FilterTeletravail  implements Serializable {
 	private FilterPeriode eqPeriode;
 	
 	@Enumerated(EnumType.STRING)
-	private FilterType eqFilterType;
+	private FilterTyp eqFilterType;
 	
 	private long eqMetrique;
 	
@@ -67,11 +68,10 @@ public class FilterTeletravail  implements Serializable {
 	private FilterPeriode epPeriode;
 	
 	@Enumerated(EnumType.STRING)
-	private FilterType epFilterType;
+	private FilterTyp epFilterType;
 
 	private long epMetrique;
-	
-	private String urgFilter; 
+
 	
 	/****** End: Accept Conds *******/
 	
@@ -101,31 +101,24 @@ public class FilterTeletravail  implements Serializable {
 	private SortLogic sortLogic;
 	/****** End: when run filter *******/
 	
-	
+	public FilterTeletravail(){}
 
 
-	@Override
-	public String toString() {
-		return "FilterTeletravail [Id=" + Id + ", nom=" + nom + ", eqPeriode=" + eqPeriode + ", eqFilterType="
-				+ eqFilterType + ", eqMetrique=" + eqMetrique + ", epPeriode=" + epPeriode + ", epFilterType="
-				+ epFilterType + ", epMetrique=" + epMetrique + ", urgFilter=" + urgFilter + ", commitLogic="
-				+ commitLogic + ", runSchedule=" + runSchedule + ", runAt=" + runAt + ", lastRun=" + lastRun
-				+ ", nextRun=" + nextRun + ", sortLogic=" + sortLogic + "]";
-	}
-
-	public FilterTeletravail(String nom, FilterPeriode eqPeriode, FilterType eqFilterType, long eqMetrique,
-			FilterPeriode epPeriode, FilterType epFilterType, long epMetrique, String urgFilter,
-			FilterCommit commitLogic, RunSchedule runSchedule, String runAt, Date lastRun, Date nextRun,
-			SortLogic sortLogic) {
+	public FilterTeletravail(long id, String nom, Set<Equipe> equipes, Set<Departement> departements,
+			FilterPeriode eqPeriode, FilterTyp eqFilterType, long eqMetrique, FilterPeriode epPeriode,
+			FilterTyp epFilterType, long epMetrique, FilterCommit commitLogic, RunSchedule runSchedule, String runAt,
+			Date lastRun, Date nextRun, SortLogic sortLogic) {
 		super();
+		Id = id;
 		this.nom = nom;
+		this.equipes = equipes;
+		this.departements = departements;
 		this.eqPeriode = eqPeriode;
 		this.eqFilterType = eqFilterType;
 		this.eqMetrique = eqMetrique;
 		this.epPeriode = epPeriode;
 		this.epFilterType = epFilterType;
 		this.epMetrique = epMetrique;
-		this.urgFilter = urgFilter;
 		this.commitLogic = commitLogic;
 		this.runSchedule = runSchedule;
 		this.runAt = runAt;
@@ -133,6 +126,22 @@ public class FilterTeletravail  implements Serializable {
 		this.nextRun = nextRun;
 		this.sortLogic = sortLogic;
 	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "FilterTeletravail [Id=" + Id + ", nom=" + nom + ", equipes=" + equipes + ", departements="
+				+ departements + ", eqPeriode=" + eqPeriode + ", eqFilterType=" + eqFilterType + ", eqMetrique="
+				+ eqMetrique + ", epPeriode=" + epPeriode + ", epFilterType=" + epFilterType + ", epMetrique="
+				+ epMetrique + ", commitLogic=" + commitLogic + ", runSchedule=" + runSchedule + ", runAt=" + runAt
+				+ ", lastRun=" + lastRun + ", nextRun=" + nextRun + ", sortLogic=" + sortLogic + "]";
+	}
+
+
+
 
 
 	public long getId() {
@@ -175,11 +184,11 @@ public class FilterTeletravail  implements Serializable {
 		this.eqPeriode = eqPeriode;
 	}
 
-	public FilterType getEqFilterType() {
+	public FilterTyp getEqFilterType() {
 		return eqFilterType;
 	}
 
-	public void setEqFilterType(FilterType eqFilterType) {
+	public void setEqFilterType(FilterTyp eqFilterType) {
 		this.eqFilterType = eqFilterType;
 	}
 
@@ -199,13 +208,6 @@ public class FilterTeletravail  implements Serializable {
 		this.epPeriode = epPeriode;
 	}
 
-	public FilterType getEpFilterType() {
-		return epFilterType;
-	}
-
-	public void setEpFilterType(FilterType epFilterType) {
-		this.epFilterType = epFilterType;
-	}
 
 	public long getEpMetrique() {
 		return epMetrique;
@@ -215,17 +217,19 @@ public class FilterTeletravail  implements Serializable {
 		this.epMetrique = epMetrique;
 	}
 
-	public String getUrgFilter() {
-		return urgFilter;
-	}
-
-	public void setUrgFilter(String urgFilter) {
-		this.urgFilter = urgFilter;
-	}
-
 	public FilterCommit getCommitLogic() {
 		return commitLogic;
 	}
+
+	public FilterTyp getEpFilterType() {
+		return epFilterType;
+	}
+
+
+	public void setEpFilterType(FilterTyp epFilterType) {
+		this.epFilterType = epFilterType;
+	}
+
 
 	public void setCommitLogic(FilterCommit commitLogic) {
 		this.commitLogic = commitLogic;
