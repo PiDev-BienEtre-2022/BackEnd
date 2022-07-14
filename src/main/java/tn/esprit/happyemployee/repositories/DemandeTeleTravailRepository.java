@@ -26,10 +26,8 @@ public interface DemandeTeleTravailRepository extends JpaRepository<DemandeTeleT
 	public Long getDemndeCountPerEmployee(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("user") User user);
 	
 	
-	/*@Query("SELECT f FROM DemandeTeleTravail f where ( f.user.equipe.filter =:filter "
-			+ "or f.user.equipe.departement.filter =:filter) "
-			+ " and  systemApprove = 'waiting' ")*/
-	@Query("SELECT f FROM DemandeTeleTravail f "
-			)
+	@Query("SELECT f FROM DemandeTeleTravail f where f.user.equipe.filtre =:filter "
+			+ "or f.user.equipe.departement.filtre =:filter "
+			+ " and  systemApprove = 'waiting' ")
 	public List<DemandeTeleTravail> getDemandeByFilter(@Param("filter") FilterTeletravail filter);
 }
