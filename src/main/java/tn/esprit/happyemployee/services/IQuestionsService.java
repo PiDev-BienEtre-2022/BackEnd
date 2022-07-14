@@ -1,18 +1,20 @@
 package tn.esprit.happyemployee.services;
 
-import tn.esprit.happyemployee.entities.Departement;
+import tn.esprit.happyemployee.entities.Questions;
 
 import java.util.List;
 
 public interface IQuestionsService {
-/*
-	Long addDepartement(Departement departement);
+    Long addQuestions(Questions question);
 
-	Long modifierDepartement(Departement departement);
+    Long modifyQuestions(Questions question);
 
-	void supprimerDepartement(Long departementId);
-	
-	List<Departement> getDepartements();
-	
-	Departement getDepartementById(Long departementId);*/
+    void supprimerQuestions(Long idQuestion);
+
+    List<Questions> getQuestions();
+
+    Questions getQuestionById(Long idQuestion);
+
+    void setQuestionsToQuiz(Long idQuestion, Long idQuiz);
+
 }

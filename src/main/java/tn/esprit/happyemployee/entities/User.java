@@ -55,6 +55,19 @@ public class User {
 	public void setDemandes(Set<DemandeTeleTravail> demandes) {
 		this.demandes = demandes;
 	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private Set <Reponses> reponses;
+
+	public Set<Reponses> getReponses() {
+		return reponses;
+	}
+
+	public void setReponses(Set<Reponses> reponses) {
+		this.reponses = reponses;
+	}
+
 	public User() {
 	}
 	public User(String username, String email, String password) {

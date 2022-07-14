@@ -26,7 +26,22 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz")
     private Set<Reponses> reponses;
 
-    //clé employé?
+    public Set<Questions> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Questions> questions) {
+        this.questions = questions;
+    }
+
+    public Set<Reponses> getReponses() {
+        return reponses;
+    }
+
+    public void setReponses(Set<Reponses> reponses) {
+        this.reponses = reponses;
+    }
+//clé employé?
 
     //maybe levelquiz set here
 }

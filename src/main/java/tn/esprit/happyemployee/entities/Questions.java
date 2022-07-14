@@ -84,4 +84,19 @@ public class Questions {
     @JoinColumn(name="idQuiz", nullable=true)
     private Quiz quiz;
 
+    public long getIdQuestion() {
+        return idQuestion;
+    }
+
+    public void setIdQuestion(long idQuestion) {
+        this.idQuestion = idQuestion;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
 }

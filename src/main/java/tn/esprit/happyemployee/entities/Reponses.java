@@ -33,7 +33,9 @@ public class Reponses {
     @ManyToOne
     @JoinColumn(name="idQuiz", nullable=false)
     private Quiz quiz;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }

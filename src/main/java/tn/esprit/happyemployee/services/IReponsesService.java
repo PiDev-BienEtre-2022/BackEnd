@@ -1,22 +1,14 @@
 package tn.esprit.happyemployee.services;
 
-import tn.esprit.happyemployee.entities.Equipe;
+import tn.esprit.happyemployee.entities.Reponses;
 
 import java.util.List;
 
 public interface IReponsesService {
-
-	/*Long addEquipe(Equipe equipe);
-
-	Long modifierEquipe(Equipe equipe);
-
-	void supprimerEquipe(Long equipeId);
-	
-	List<Equipe> getEquipes();
-	
-	Equipe getEquipeById(Long equipeId);
-	
-	void affecterEquipeADepartement(Long equipeId, Long departementId);
-	
-	void affecterUserAEquipe(Long userId, Long equipeId);*/
+     void supprimerReponse(Long idReponses);
+     Long addReponses(Reponses reponse);
+     List<Reponses> getReponses();
+     Reponses getReponsesById(Long idReponses);
+     void affecterEquipeADepartement(Long idReponses, Long idQuiz);
+  //   void affecterUserAEquipe(Long userId, Long idReponses);
 }
