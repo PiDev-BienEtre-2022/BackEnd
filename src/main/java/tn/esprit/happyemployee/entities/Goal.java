@@ -24,7 +24,6 @@ public class Goal implements Serializable {
     private String Titre;
     private String description;
     private float percentage;
-    private Boolean validate;
     private Boolean status;
 
     @JoinColumn(name="ID_Category",referencedColumnName = "id")
@@ -35,7 +34,6 @@ public class Goal implements Serializable {
     @ManyToOne(optional = false)
     private Evaluation evaluation;
 
-
     @Override
     public String toString() {
         return "Goal{" +
@@ -43,7 +41,7 @@ public class Goal implements Serializable {
                 ", Titre='" + Titre + '\'' +
                 ", description='" + description + '\'' +
                 ", percentage=" + percentage +
-                ", validate=" + validate +
+
                 '}';
     }
 

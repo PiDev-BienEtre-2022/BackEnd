@@ -23,7 +23,7 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String Nom;
+    private String nom;
     private float percentage;
 
     private Boolean status;
@@ -45,7 +45,7 @@ public class Category implements Serializable {
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", Nom='" + Nom + '\'' +
+                ", Nom='" + nom + '\'' +
                 ", percentage=" + percentage +
                 ", domain=" + domain +
                 '}';

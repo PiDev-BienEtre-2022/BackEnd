@@ -25,8 +25,12 @@ public class categoryController {
 
     @PostMapping("/add")
     public String add_category(@RequestBody Category category){
-        agent.addCategory(category);
-        return "ok";
+        Category old = agent.getCategoryByDomainAndNom(category.getDomain(), category.getNom());
+        if(old == null){
+            agent.addCategory(category);
+            return "ok";
+        }
+        return "Category exist";
     }
 
     @PutMapping("update/{id}")

@@ -3,6 +3,7 @@ package tn.esprit.happyemployee.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.happyemployee.entities.Evaluation;
+import tn.esprit.happyemployee.entities.User;
 import tn.esprit.happyemployee.repositories.EvaluaionRepository;
 
 import java.util.List;
@@ -35,5 +36,19 @@ public class EvaluationService implements IEvaluationService{
     @Override
     public Evaluation getEvaluationById(Long id) {
         return evaluaionRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Evaluation> getEvaluationByUser(User u) {
+        return evaluaionRepository.findByUser(u);
+    }
+    @Override
+    public Evaluation getCurrentEval(long id){
+        return evaluaionRepository.findByUserAndNotValidated(id);
+    }
+
+    @Override
+    public Evaluation getLastEval(long id){
+        return evaluaionRepository.findByLastEval(id);
     }
 }

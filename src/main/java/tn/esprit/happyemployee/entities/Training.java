@@ -1,5 +1,6 @@
 package tn.esprit.happyemployee.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,6 +34,17 @@ public class Training implements Serializable {
     @JoinColumn(name="ID_Category",referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category category;
+
+    @ManyToMany
+    @JoinTable(
+            name = "participation",
+            joinColumns = @JoinColumn(name = "training_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<User> users;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "training",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Feedback> feedbacks;
 
     @Override
     public String toString() {

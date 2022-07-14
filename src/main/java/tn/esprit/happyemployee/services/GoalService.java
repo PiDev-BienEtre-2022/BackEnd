@@ -2,6 +2,9 @@ package tn.esprit.happyemployee.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.happyemployee.domain.enums.Domain;
+import tn.esprit.happyemployee.entities.Category;
+import tn.esprit.happyemployee.entities.Evaluation;
 import tn.esprit.happyemployee.entities.Goal;
 import tn.esprit.happyemployee.repositories.GoalRepository;
 
@@ -35,5 +38,25 @@ public class GoalService implements IGoalService{
     @Override
     public Goal getGoalById(Long id) {
         return goalRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Goal> getGoalsByEvaluation(Evaluation e) {
+        return goalRepository.findByEvaluation(e);
+    }
+
+    @Override
+    public List<Goal> getGoalsEvalAndCategory(Evaluation e, Category c){
+        return goalRepository.findByEvaluationAndCategory(e, c);
+    }
+
+    @Override
+    public List<Goal> getGoalsEvalAndDomain(Long id, Domain d){
+        return goalRepository.findByEvaluationAndDomain(id, d);
+    }
+
+    @Override
+    public List<Goal> getDifferentDomain(Long id){
+        return goalRepository.findByDifferentDomain(id);
     }
 }
