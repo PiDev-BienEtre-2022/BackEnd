@@ -30,6 +30,8 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
+	private String phone;
+	private String imageUrl;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -91,6 +93,18 @@ public class User {
 	}
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }
