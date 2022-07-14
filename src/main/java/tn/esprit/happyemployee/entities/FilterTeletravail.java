@@ -27,7 +27,6 @@ import tn.esprit.happyemployee.domain.enums.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "filterTeletravail")
 @EntityListeners(AuditingEntityListener.class)
@@ -37,7 +36,7 @@ public class FilterTeletravail  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id ;
 
     private String nom;
