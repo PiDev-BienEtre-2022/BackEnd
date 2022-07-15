@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +27,6 @@ import tn.esprit.happyemployee.domain.enums.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "filterTeletravail")
 @EntityListeners(AuditingEntityListener.class)
@@ -35,15 +36,17 @@ public class FilterTeletravail  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id ;
 
     private String nom;
     
     /****** Start:  For who *******/
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Equipe> equipes;
 	
+    @JsonIgnore
 	@OneToMany(mappedBy="filtre")
 	private Set<Departement> departements;
 	

@@ -26,7 +26,6 @@ import tn.esprit.happyemployee.domain.enums.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "demandetele")
 @EntityListeners(AuditingEntityListener.class)
@@ -36,7 +35,7 @@ public class DemandeTeleTravail implements Serializable {
 private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id;
 	
 	@Temporal(TemporalType.DATE)

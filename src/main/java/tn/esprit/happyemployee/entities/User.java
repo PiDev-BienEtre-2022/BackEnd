@@ -1,5 +1,8 @@
 package tn.esprit.happyemployee.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import tn.esprit.happyemployee.domain.enums.Domain;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -32,6 +35,10 @@ public class User {
 	private String password;
 	private String phone;
 	private String imageUrl;
+
+	@Enumerated(EnumType.STRING)
+	private Domain domain;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -59,11 +66,28 @@ public class User {
 	}
 	public User() {
 	}
+
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Evaluation> evaluations;
+
+	@ManyToMany(mappedBy = "users")
+	Set<Training> trainings;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Feedback> feedbacks;
+
+	public User(Domain domain) {
+		this.domain = domain;
+	}
 	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -107,4 +131,11 @@ public class User {
 		this.phone = phone;
 	}
 
+	public Domain getDomain() {
+		return domain;
+	}
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
+	}
 }
