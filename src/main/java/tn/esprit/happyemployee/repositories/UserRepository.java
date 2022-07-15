@@ -12,6 +12,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);
 	
+	void deleteUserById(Long id);
+    Optional<User> findUserById(Long id);
+    
 	@Query("SELECT count(f) FROM User f where f.equipe=:equipe")
 	public Long getUserCountPerEquipe(@Param("equipe") Equipe equipe);
 }

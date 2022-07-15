@@ -33,6 +33,8 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
+	private String phone;
+	private String imageUrl;
 
 	@Enumerated(EnumType.STRING)
 	private Domain domain;
@@ -123,5 +125,17 @@ public class User {
 
 	public void setDomain(Domain domain) {
 		this.domain = domain;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }
