@@ -1,19 +1,25 @@
 package tn.esprit.happyemployee.controllers;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.happyemployee.domain.enums.ERole;
+import tn.esprit.happyemployee.entities.AutheticationLog;
 import tn.esprit.happyemployee.entities.Role;
 import tn.esprit.happyemployee.entities.User;
 import tn.esprit.happyemployee.payload.request.LoginRequest;
@@ -31,6 +38,7 @@ import tn.esprit.happyemployee.repositories.RoleRepository;
 import tn.esprit.happyemployee.repositories.UserRepository;
 import tn.esprit.happyemployee.security.jwt.JwtUtils;
 import tn.esprit.happyemployee.security.services.UserDetailsImpl;
+import tn.esprit.happyemployee.services.IAuthentificationLogService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -51,9 +59,11 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
-  @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+  @Autowired
+  private IAuthentificationLogService authentificationLogService;
 
+  @PostMapping("/signin")
+  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpSession session) {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -64,6 +74,8 @@ public class AuthController {
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())
         .collect(Collectors.toList());
+
+    session.setAttribute("authLog", new AutheticationLog(LocalDateTime.now(), null, userDetails.getEmail()));
 
     return ResponseEntity.ok(new JwtResponse(jwt, 
                          userDetails.getId(), 
@@ -125,5 +137,18 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+  }
+  @PostMapping("/signout")
+  public ResponseEntity<?> logoutUser(HttpSession session) {
+    AutheticationLog autheticationLog = (AutheticationLog) session.getAttribute("authLog");
+
+    if (autheticationLog != null) {
+      autheticationLog.setEndDate(LocalDateTime.now());
+      authentificationLogService.addAuthLog(autheticationLog);
+    }
+
+    ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+            .body(new MessageResponse("You've been signed out!"));
   }
 }
