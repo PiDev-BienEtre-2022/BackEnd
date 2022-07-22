@@ -14,10 +14,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(AnswerController.ROOT_MAPPING)
+@RequestMapping("/challenge/answers")
 public class AnswerController {
 
-	public static final String ROOT_MAPPING = "/api/answers";
+//	public static final String ROOT_MAPPING = "/api/answers";
 
 	@Autowired
 	IAnswerService answerService;
@@ -25,9 +25,8 @@ public class AnswerController {
 	@Autowired
 	IQuestionService questionService;
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/addanswer/{question_id}")
+	@ResponseBody
 	public Answer save(@Valid Answer answer, @RequestParam long question_id) {
 
 
@@ -35,9 +34,8 @@ public class AnswerController {
 		return questionService.addAnswerToQuestion(answer, question);
 	}
 
-	@RequestMapping(value = "/updateAll", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/updateAllanswers")
+	@ResponseBody
 	public void updateAll(@RequestBody List<Answer> answers) {
 		for (int i = 0; i < answers.size(); i++) {
 			Answer answer = answers.get(i);
@@ -46,28 +44,23 @@ public class AnswerController {
 			answerService.update(answer);
 		}
 	}
-
-	@RequestMapping(value = "/{answer_id}", method = RequestMethod.GET)
-	@PreAuthorize("permitAll")
-	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/findanswer/{demandeId}")
+	@ResponseBody
 	public Answer find(@PathVariable Long answer_id) {
 
 		return answerService.find(answer_id);
 	}
 
-	@RequestMapping(value = "/{answer_id}", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/updateanswer/{userId}")
+	@ResponseBody
 	public Answer update(@PathVariable Long answer_id, @Valid Answer answer) {
 
 
 		answer.setIdAnswer(answer_id);
 		return answerService.update(answer);
 	}
-
-	@RequestMapping(value = "/{answer_id}", method = RequestMethod.DELETE)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/deleteanswer/{demandeId}")
+	@ResponseBody
 	public void delete(@PathVariable Long answer_id) {
 		Answer answer = answerService.find(answer_id);
 		answerService.delete(answer);

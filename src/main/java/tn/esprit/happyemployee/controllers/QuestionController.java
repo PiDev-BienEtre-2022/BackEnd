@@ -16,10 +16,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(QuestionController.ROOT_MAPPING)
+@RequestMapping("/challenge/questions")
 public class QuestionController {
 
-	public static final String ROOT_MAPPING = "/api/questions";
+	public static final String ROOT_MAPPING = "/challenge/questions";
 
 	@Autowired
 	private QuestionService questionService;
@@ -30,9 +30,8 @@ public class QuestionController {
 	@Autowired
 	private AnswerService answerService;
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/addquestion/{quiz_id}")
+	@ResponseBody
 	public Question save(@Valid Question question, @RequestParam Long quiz_id) {
 
 
@@ -42,9 +41,8 @@ public class QuestionController {
 		return questionService.save(question);
 	}
 
-	@RequestMapping(value = "/updateAll", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/updateAllquestions")
+	@ResponseBody
 	public void updateAll(@RequestBody List<Question> questions) {
 		for (int i = 0; i < questions.size(); i++) {
 			Question question = questions.get(i);
@@ -54,51 +52,45 @@ public class QuestionController {
 		}
 	}
 
-	@RequestMapping(value = "/{question_id}", method = RequestMethod.GET)
-	@PreAuthorize("permitAll")
-	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/findquestion/{question_id}")
+	@ResponseBody
 	public Question find(@PathVariable Long question_id) {
 
 		return questionService.find(question_id);
 	}
 
-	@RequestMapping(value = "/{question_id}", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/updatequestion/{question_id}")
+	@ResponseBody
 	public Question update(@PathVariable Long question_id, @Valid Question question) {
 
 		question.setIdQuestion(question_id);
 		return questionService.update(question);
 
 	}
-
-	@RequestMapping(value = "/{question_id}", method = RequestMethod.DELETE)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/deletequestion/{question_id}")
+	@ResponseBody
 	public void delete(@PathVariable Long question_id) {
 		Question question = questionService.find(question_id);
 		questionService.delete(question);
 	}
 
-	@RequestMapping(value = "/{question_id}/answers", method = RequestMethod.GET)
-	@PreAuthorize("permitAll")
-	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/{question_id}/", method = RequestMethod.GET)
+	@GetMapping("/getanswersforquestions{question_id}")
+	@ResponseBody
 	public List<Answer> findAnswers(@PathVariable Long question_id) {
 		Question question = questionService.find(question_id);
 		return answerService.findAnswersByQuestion(question);
 	}
 
-	@RequestMapping(value = "/{question_id}/correctAnswer", method = RequestMethod.GET)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/getcorrectanswerforquestion/{question_id}")
+	@ResponseBody
 	public Answer getCorrectAnswer(@PathVariable Long question_id) {
 		Question question = questionService.find(question_id);
 		return questionService.getCorrectAnswer(question);
 	}
 
-	@RequestMapping(value = "/{question_id}/correctAnswer", method = RequestMethod.POST)
-	@PreAuthorize("isAuthenticated()")
-	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/setcorrectanswerforquestion/question_id")
+	@ResponseBody
 	public void setCorrectAnswer(@PathVariable Long question_id, @RequestParam Long answer_id) {
 
 		Question question = questionService.find(question_id);
