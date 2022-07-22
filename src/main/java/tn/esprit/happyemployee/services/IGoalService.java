@@ -18,6 +18,6 @@ public interface IGoalService {
     List<Goal> getGoalsEvalAndCategory(Evaluation e, Category c);
 
     List<Goal> getGoalsEvalAndDomain(Long id, Domain d);
-    List<Goal> getDifferentDomain(Long id);
+    List<Double[]> getDifferentDomain(Long id, Evaluation eval);
 
 }

@@ -6,6 +6,7 @@ import tn.esprit.happyemployee.entities.Evaluation;
 import tn.esprit.happyemployee.entities.User;
 import tn.esprit.happyemployee.repositories.EvaluaionRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,4 +52,27 @@ public class EvaluationService implements IEvaluationService{
     public Evaluation getLastEval(long id){
         return evaluaionRepository.findByLastEval(id);
     }
+
+    @Override
+    public List<Evaluation> getEvaluationValidated(int val) {
+        return evaluaionRepository.findByValidatedAndStatusTrue(val);
+    }
+
+    @Override
+    public List<Evaluation> getEvaluationFinalValidated(int val) {
+        return evaluaionRepository.findByFinalValidated(val);
+    }
+
+    @Override
+    public List<Evaluation> getUserValidatedEval(long id){
+        return evaluaionRepository.findByUserAndValidated(id);
+    }
+
+
+    @Override
+    public List<Evaluation> getWithLocalDate(String d){
+        return evaluaionRepository.findByDate_goalsAndStatusTrue(d);
+    }
+
+
 }

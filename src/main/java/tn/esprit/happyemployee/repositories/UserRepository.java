@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query("SELECT count(f) FROM User f where f.equipe=:equipe")
 	public Long getUserCountPerEquipe(@Param("equipe") Equipe equipe);
+
 }

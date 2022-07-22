@@ -1,6 +1,7 @@
 package tn.esprit.happyemployee.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.happyemployee.entities.Category;
 import tn.esprit.happyemployee.entities.Evaluation;
@@ -12,6 +13,8 @@ import tn.esprit.happyemployee.services.GoalService;
 import java.util.List;
 
 @RestController
+@EnableWebSecurity
+@CrossOrigin
 @RequestMapping("/goal")
 public class goalController {
     @Autowired
@@ -40,6 +43,7 @@ public class goalController {
         Evaluation eval = evaluationService.getEvaluationById(id_eval);
         goal.setCategory(cat);
         goal.setEvaluation(eval);
+        goal.setStatus(true);
 
         agent.addGoal(goal);
         return "ok";
@@ -58,7 +62,6 @@ public class goalController {
         old.setEvaluation(goal.getEvaluation());
         old.setPercentage(goal.getPercentage());
         old.setTitre(goal.getTitre());
-        old.setStatus(goal.getStatus());
 
         agent.updateGoal(old);
         return "ok";

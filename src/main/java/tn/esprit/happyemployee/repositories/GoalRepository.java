@@ -12,15 +12,20 @@ import java.util.List;
 
 public interface GoalRepository extends JpaRepository<Goal,Long> {
     public List<Goal> findByStatusTrue();
-    public List<Goal> findByEvaluation(Evaluation e);
+    public List<Goal> findByEvaluationAndStatusTrue(Evaluation e);
 
     public List<Goal> findByEvaluationAndCategory(Evaluation e, Category c);
 
     @Query(value = "select g from Goal g where g.category.domain=:d and g.evaluation.id=:id")
     public List<Goal> findByEvaluationAndDomain(@Param("id") long id, @Param("d") Domain d);
 
-    @Query(value = "select g from Goal g where g.category.domain!=(SELECT domain FROM User where id=:id) GROUP BY g.category")
-    public List<Goal> findByDifferentDomain(@Param("id") long id);
-    //Test status
-    //Test Eval
+    @Query(value = "select g.category.id , AVG(g.percentage) from Goal g " +
+            "where " +
+            "g.category.domain!=(SELECT domain FROM User where id=:id) " +
+            "and " +
+            "g.status = true " +
+            "and " +
+            "g.evaluation =:eval " +
+            "GROUP BY g.category")
+    public List<Double[]> findByDifferentDomain(@Param("id") long id, @Param("eval") Evaluation eval);
 }

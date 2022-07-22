@@ -26,6 +26,8 @@ public class Goal implements Serializable {
     private float percentage;
     private Boolean status;
 
+    private int domain;
+
     @JoinColumn(name="ID_Category",referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category category;

@@ -41,11 +41,11 @@ public class CategoryService implements ICategoryService{
     @Override
     public List<Category> getCategoriesByDomain(Domain d) {
 
-        return categoryRepository.findByDomain(d);
+        return categoryRepository.findByDomainAndStatusTrue(d);
     }
 
     @Override
     public Category getCategoryByDomainAndNom(Domain d, String nom) {
-        return categoryRepository.findByDomainAndNom(d, nom);
+        return categoryRepository.findByDomainAndNomAndStatusTrue(d, nom);
     }
 }

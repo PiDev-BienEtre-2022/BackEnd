@@ -3,6 +3,7 @@ package tn.esprit.happyemployee.services;
 import tn.esprit.happyemployee.entities.Evaluation;
 import tn.esprit.happyemployee.entities.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IEvaluationService {
@@ -17,5 +18,10 @@ public interface IEvaluationService {
    Evaluation getCurrentEval(long id);
     Evaluation getLastEval(long id);
 
+    List<Evaluation> getEvaluationValidated(int val);
 
+    List<Evaluation> getEvaluationFinalValidated(int val);
+
+    List<Evaluation> getUserValidatedEval(long id);
+    List<Evaluation> getWithLocalDate(String d);
 }

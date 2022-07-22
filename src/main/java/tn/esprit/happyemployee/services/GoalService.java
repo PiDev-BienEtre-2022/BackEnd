@@ -42,7 +42,7 @@ public class GoalService implements IGoalService{
 
     @Override
     public List<Goal> getGoalsByEvaluation(Evaluation e) {
-        return goalRepository.findByEvaluation(e);
+        return goalRepository.findByEvaluationAndStatusTrue(e);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GoalService implements IGoalService{
     }
 
     @Override
-    public List<Goal> getDifferentDomain(Long id){
-        return goalRepository.findByDifferentDomain(id);
+    public List<Double[]> getDifferentDomain(Long id, Evaluation eval){
+        return goalRepository.findByDifferentDomain(id, eval);
     }
 }

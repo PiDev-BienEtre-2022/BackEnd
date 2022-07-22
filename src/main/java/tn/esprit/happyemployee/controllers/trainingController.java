@@ -1,12 +1,10 @@
 package tn.esprit.happyemployee.controllers;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.happyemployee.domain.enums.Domain;
-import tn.esprit.happyemployee.entities.Evaluation;
-import tn.esprit.happyemployee.entities.Goal;
-import tn.esprit.happyemployee.entities.Training;
-import tn.esprit.happyemployee.entities.User;
+import tn.esprit.happyemployee.entities.*;
 import tn.esprit.happyemployee.services.*;
 
 import java.util.List;
@@ -65,7 +63,7 @@ public class trainingController {
         return "ok";
     }
 
-    @DeleteMapping("/category/{id}")
+    @GetMapping("/category/{id}")
     public List<Training> get_trainings_by_category(@PathVariable("id") long id){
         return agent.getTrainingsByCategory(categoryService.getCategoryById(id));
     }
@@ -128,9 +126,14 @@ public class trainingController {
         List<Training> list= agent.getTrainingsByUserDomain(id_user);
         Evaluation eval = evaluationService.getLastEval(id_user);
         if(eval != null){
-            List<Goal> goals = goalService.getDifferentDomain(id_user);
-            System.out.println(goals.size());
-        }
-        return list;
+            List<Double[]> goals = goalService.getDifferentDomain(id_user, eval);
+            for (int i = 0; i < goals.size(); i++) {
+                Category c =  categoryService.getCategoryById(goals.get(i)[0].longValue());
+                if(c.getPercentage() <= goals.get(i)[1]){
+                    list.addAll(agent.getTrainingsByCategory(c));
+                }
+            }
+         }
+         return list;
     }
 }

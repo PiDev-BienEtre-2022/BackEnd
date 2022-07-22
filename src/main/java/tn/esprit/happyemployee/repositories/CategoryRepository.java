@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     public List<Category> findByStatusTrue();
-    public List<Category> findByDomain(Domain d);
-    public Category findByDomainAndNom(Domain d, String nom);
+    public List<Category> findByDomainAndStatusTrue(Domain d);
+    public Category findByDomainAndNomAndStatusTrue(Domain d, String nom);
+
+
 }

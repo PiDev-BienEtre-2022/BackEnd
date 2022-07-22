@@ -15,11 +15,15 @@ TrainingRepository extends JpaRepository<Training,Long> {
     public List<Training> findByStatusTrue();
 
     public List<Training> findByCategory(Category c);
-    @Query(value = "select * from Training " +
-            "where " +
-            "((SELECT domain FROM Category INNER JOIN Training ON Category.id = Training.id_category) = (SELECT domain FROM users where id=:id))" +
-            " and " +
-            "(status = true) order By date", nativeQuery = true)
+    @Query(value = "SELECT training.id, training.date, training.label , training.nbParticipant, training.place, training.ID_Category, training.status " +
+            "FROM `training` , `category`, `users` " +
+            "WHERE " +
+            "training.id_category = category.id " +
+            "and " +
+            "users.domain = category.domain and users.id =:id " +
+            "and " +
+            "training.status = true " +
+            "order by training.date" , nativeQuery = true)
     public List<Training> findByUserDomain(@Param("id")  long id);
 
 }
