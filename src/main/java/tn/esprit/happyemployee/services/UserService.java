@@ -69,12 +69,12 @@ public class UserService implements IUserService{
         } while (seconds > 60);
         do {
             minutes = minutes % 60;
-            minutes++;
+            hours++;
         } while (hours > 60);
         do {
             hours = hours % 24;
             days++;
-        } while (hours > 60);
+        } while (hours > 24);
 
         return new CalculCnx(days, hours, minutes, seconds);
     }
