@@ -34,6 +34,9 @@ public class FilterTeleTravailController {
 
     @Autowired
     TaskDefinitionBean taskDefinitionBean;
+    
+    @Autowired
+    TaskDefinition task;
 
 	@PostMapping("/ajouterFilter")
 	@ResponseBody
@@ -41,35 +44,35 @@ public class FilterTeleTravailController {
 		filterTeleTravailService.addFilterTeletravail(filter);
 		if(filter.getRunSchedule() != RunSchedule.eachDemande) {
 			String[] time = filter.getRunAt().split(":");
-			TaskDefinition taskDefinition = new TaskDefinition();
-			taskDefinition.setFilter(filter);
+			
+			task.setFilter(filter);
 			switch(filter.getRunSchedule()) {
 			  case eachMon:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * MON");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * MON");
 				  break;
 			  case eachTues:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * TUE");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * TUE");
 				  break;
 			  case eachWed:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * WED");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * WED");
 				  break;
 			  case  eachThur:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * THU");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * THU");
 				  break;
 			  case eachFri:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * FRI");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * FRI");
 				  break;
 			  case eachSat:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SAT");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SAT");
 				  break;
 			  case eachSun:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SUN");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SUN");
 				  break;
 			  default:
-				  taskDefinition.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SUN");
+				  task.setCronExpression("0 "+ time[1] +" "+ time[0]+" ? * SUN");
 			}
-			taskDefinitionBean.setTaskDefinition(taskDefinition);
-	        taskSchedulingService.scheduleATask(filter.getId(), taskDefinitionBean, taskDefinition.getCronExpression());
+			taskDefinitionBean.setTaskDefinition(task);
+	        taskSchedulingService.scheduleATask(filter.getId(), taskDefinitionBean, task.getCronExpression());
 		}
 		return filter;
 	}
@@ -95,10 +98,17 @@ public class FilterTeleTravailController {
 		return  filterTeleTravailService.getFilterTeletravails();
 	}
 	
+	@GetMapping("/UserFilter/{userId}")
+	@ResponseBody
+	public FilterTeletravail UserFilter(@PathVariable("userId") Long userId) {
+
+		return  filterTeleTravailService.getFilterTeletravailByUserId(userId);
+	}
+	
 	@GetMapping("/executeFilter/{filterId}")
 	@ResponseBody
 	public List<DemandeTeleTravail> executeFilter(@PathVariable("filterId") Long filterId) {
-		TaskDefinition task = new TaskDefinition();
+		//TaskDefinition task = new TaskDefinition();
 		FilterTeletravail filter = filterTeleTravailService.getFilterTeletravailById(filterId);
 		task.setFilter(filter);
 		return task.execute(true);

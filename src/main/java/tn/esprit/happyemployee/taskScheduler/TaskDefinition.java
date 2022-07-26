@@ -7,7 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.scheduling.support.CronExpression;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import tn.esprit.happyemployee.domain.comparator.DateComparator;
 import tn.esprit.happyemployee.domain.comparator.NbDayMonthComparator;
@@ -20,6 +23,8 @@ import tn.esprit.happyemployee.repositories.DemandeTeleTravailRepository;
 import tn.esprit.happyemployee.repositories.FilterTeletravailRepository;
 import tn.esprit.happyemployee.services.DemandeTeleTravailService;
 
+@Component
+@Configurable
 public class TaskDefinition {
 	
 	private String cronExpression;
@@ -39,6 +44,7 @@ public class TaskDefinition {
 		List<DemandeTeleTravail> result =  new ArrayList<DemandeTeleTravail>();
 		
 		System.out.println("Execute Filter ");
+		
 		List<DemandeTeleTravail> demandes = demandeTeleTravailRepository.getDemandeByFilter(filter);
 		
 		if(filter.getSortLogic() == SortLogic.byDateCreation)

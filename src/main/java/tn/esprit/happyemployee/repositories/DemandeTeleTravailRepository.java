@@ -30,4 +30,7 @@ public interface DemandeTeleTravailRepository extends JpaRepository<DemandeTeleT
 			+ "or f.user.equipe.departement.filtre =:filter "
 			+ " and  systemApprove = 'waiting' ")
 	public List<DemandeTeleTravail> getDemandeByFilter(@Param("filter") FilterTeletravail filter);
+
+	@Query("SELECT f FROM DemandeTeleTravail f where f.user.equipe.Id =:equipeID ")
+	public List<DemandeTeleTravail> findByEquipeId(@Param("equipeID") Long equipeID);
 }

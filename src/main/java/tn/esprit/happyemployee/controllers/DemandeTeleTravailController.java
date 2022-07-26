@@ -3,6 +3,7 @@ package tn.esprit.happyemployee.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import tn.esprit.happyemployee.repositories.UserRepository;
 import tn.esprit.happyemployee.services.IDemandeTeleTravailService;
 
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class DemandeTeleTravailController {
 
@@ -53,6 +54,12 @@ public class DemandeTeleTravailController {
 	public List<DemandeTeleTravail> listeDemande() {
 
 		return  demandeTeleTravailService.getDemandeTeleTravails();
+	}
+	
+	@GetMapping("/listeDemandeByEquipe/equipeId")
+	@ResponseBody
+	public List<DemandeTeleTravail> listeDemandeFilter(@PathVariable("equipeId") Long equipeId) {
+		return  demandeTeleTravailService.getDemandeTeleTravailsByEquipeId(equipeId);
 	}
 	
 	@GetMapping("/getDemande/{demandeId}")

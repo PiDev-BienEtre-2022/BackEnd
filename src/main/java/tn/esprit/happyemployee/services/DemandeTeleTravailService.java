@@ -48,7 +48,10 @@ public class DemandeTeleTravailService implements IDemandeTeleTravailService {
 
 	@Override
 	public Long modifierDemandeTeleTravail(DemandeTeleTravail demande) {
-		demandeTeleTravailRepository.save(demande);
+		DemandeTeleTravail dm = demandeTeleTravailRepository.findById(demande.getId()).get();
+		dm.setManagerApprove(demande.getManagerApprove());
+		dm.setNoteManager(demande.getNoteManager());
+		demandeTeleTravailRepository.save(dm);
 		return demande.getId();
 	}
 
@@ -182,6 +185,7 @@ public class DemandeTeleTravailService implements IDemandeTeleTravailService {
 	public Long getDemndeCountPerEquipe(Date startDate, Date endDate, Equipe equipe) {
 		return demandeTeleTravailRepository.getDemndeCountPerEquipe(startDate, endDate, equipe);
 	}
+	
 
 	@Override
 	public boolean isDemandeAccepted(DemandeTeleTravail demande, FilterTeletravail filter) {
@@ -230,5 +234,10 @@ public class DemandeTeleTravailService implements IDemandeTeleTravailService {
 			
 			return result < filter.getEpMetrique();
 		}
+	}
+
+	@Override
+	public List<DemandeTeleTravail> getDemandeTeleTravailsByEquipeId(Long equipeID) {
+		return demandeTeleTravailRepository.findByEquipeId(equipeID);
 	}
 }

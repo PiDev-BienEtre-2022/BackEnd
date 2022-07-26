@@ -19,4 +19,6 @@ public interface IFilterTeletravailService {
 	void affecterFiltreADepartement(Long filtreId, Long departementId);
 	
 	void affecterFiltreAEquipe(Long filtreId, Long equipeId);
+	
+	FilterTeletravail getFilterTeletravailByUserId(Long userId);
 }
