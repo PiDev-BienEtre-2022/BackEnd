@@ -3,6 +3,7 @@ package tn.esprit.happyemployee.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.happyemployee.domain.enums.Domain;
 import tn.esprit.happyemployee.entities.Category;
 import tn.esprit.happyemployee.entities.Evaluation;
 import tn.esprit.happyemployee.entities.Goal;
@@ -10,6 +11,8 @@ import tn.esprit.happyemployee.services.CategoryService;
 import tn.esprit.happyemployee.services.EvaluationService;
 import tn.esprit.happyemployee.services.GoalService;
 
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -79,5 +82,36 @@ public class goalController {
         return agent.getGoalsByEvaluation(eval);
     }
 
+    @GetMapping("/stat/{id}")
+    public double[] Stat(@PathVariable("id") long id){
+        double[] arr = new double[4];
+
+        if(agent.stat(id, Domain.Software) == null){
+            arr[0]=0;
+        }else{
+            arr[0]=agent.stat(id, Domain.Software);
+        }
+
+        if(agent.stat(id, Domain.Administration) == null){
+            arr[1]=0;
+        }else{
+            arr[1]=agent.stat(id, Domain.Administration);
+        }
+
+        if(agent.stat(id, Domain.Soft) == null){
+            arr[2]=0;
+        }else{
+            arr[2]=agent.stat(id, Domain.Soft);
+        }
+
+        if(agent.stat(id, Domain.Management) == null){
+            arr[3]=0;
+        }else{
+            arr[3]=agent.stat(id, Domain.Management);
+        }
+
+        return arr;
+
+    }
 
 }

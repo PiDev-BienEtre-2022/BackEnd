@@ -28,4 +28,13 @@ public interface GoalRepository extends JpaRepository<Goal,Long> {
             "g.evaluation =:eval " +
             "GROUP BY g.category")
     public List<Double[]> findByDifferentDomain(@Param("id") long id, @Param("eval") Evaluation eval);
+
+    @Query(value = "select AVG(g.percentage) from Goal g " +
+            "where " +
+            "g.evaluation.user.id=:id " +
+            "and " +
+            "g.category.domain =:d " +
+            "and " +
+            "status = true")
+    public Double statSoft(@Param("id") long id, @Param("d") Domain d);
 }

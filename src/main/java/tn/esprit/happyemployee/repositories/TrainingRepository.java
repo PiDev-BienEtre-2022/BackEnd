@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface
 TrainingRepository extends JpaRepository<Training,Long> {
+
+
     public List<Training> findByStatusTrue();
 
     public List<Training> findByCategory(Category c);

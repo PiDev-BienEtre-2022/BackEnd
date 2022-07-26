@@ -15,6 +15,8 @@ public class TrainingService implements ITrainingService{
 
     @Autowired
     TrainingRepository trainingRepository;
+
+
     @Override
     public void addTraining(Training training) {
         trainingRepository.save(training);

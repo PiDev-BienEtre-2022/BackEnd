@@ -2,6 +2,7 @@ package tn.esprit.happyemployee.controllers;
 
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.happyemployee.domain.enums.Domain;
 import tn.esprit.happyemployee.entities.*;
@@ -10,6 +11,8 @@ import tn.esprit.happyemployee.services.*;
 import java.util.List;
 
 @RestController
+@EnableWebSecurity
+@CrossOrigin
 @RequestMapping("/training")
 public class trainingController {
     @Autowired
@@ -104,7 +107,6 @@ public class trainingController {
                         per = somme / list.size();
                     }
                     if (per >= t.getCategory().getPercentage()) {
-                        System.out.println("///////////");
                         /*if(t.getNbParticipant() != 0){
                             return "ok";
                         }else{
@@ -112,10 +114,10 @@ public class trainingController {
                         }*/
                         return "ok";
                     } else {
-                        return "Percentage category not enough";
+                        return "Percentage category not enough !";
                     }
                 }else{
-                    return "Percentage domain not enough";
+                    return "Percentage domain not enough !";
                 }
             }
         }

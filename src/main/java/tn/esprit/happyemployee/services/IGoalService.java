@@ -19,5 +19,6 @@ public interface IGoalService {
 
     List<Goal> getGoalsEvalAndDomain(Long id, Domain d);
     List<Double[]> getDifferentDomain(Long id, Evaluation eval);
+    Double stat(Long id, Domain d);
 
 }

@@ -59,4 +59,10 @@ public class GoalService implements IGoalService{
     public List<Double[]> getDifferentDomain(Long id, Evaluation eval){
         return goalRepository.findByDifferentDomain(id, eval);
     }
+
+    @Override
+    public Double  stat(Long id, Domain d){
+        return goalRepository.statSoft(id, d);
+    }
+
 }

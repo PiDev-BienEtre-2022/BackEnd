@@ -8,6 +8,8 @@ import tn.esprit.happyemployee.entities.User;
 import java.util.List;
 
 public interface ITrainingService {
+
+
     void addTraining(Training training);
     void updateTraining(Training training);
     void deleteTraining(Long id);
