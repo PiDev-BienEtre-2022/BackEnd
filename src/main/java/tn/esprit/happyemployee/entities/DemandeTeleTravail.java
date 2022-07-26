@@ -63,7 +63,7 @@ private static final long serialVersionUID = 1L;
 	private DemandeReason reason;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	User user;
 
 	public DemandeTeleTravail() {}

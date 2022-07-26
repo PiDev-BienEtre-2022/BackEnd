@@ -35,5 +35,7 @@ public interface IDemandeTeleTravailService {
 	Long getDemndeCountPerEquipe(Date startDate , Date endDate, Equipe equipe);
 	
 	boolean isDemandeAccepted(DemandeTeleTravail demande, FilterTeletravail filter);
+	
+	List<DemandeTeleTravail> getDemandeTeleTravailsByEquipeId(Long equipeID);
 
 }

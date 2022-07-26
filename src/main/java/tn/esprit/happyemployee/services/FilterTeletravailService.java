@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import tn.esprit.happyemployee.repositories.DepartementRepository;
 import tn.esprit.happyemployee.repositories.EquipeRepository;
 import tn.esprit.happyemployee.repositories.FilterTeletravailRepository;
+import tn.esprit.happyemployee.repositories.UserRepository;
 import tn.esprit.happyemployee.entities.Departement;
 import tn.esprit.happyemployee.entities.Equipe;
 import tn.esprit.happyemployee.entities.FilterTeletravail;
+import tn.esprit.happyemployee.entities.User;
 
 @Service
 public class FilterTeletravailService implements IFilterTeletravailService {
@@ -21,6 +23,8 @@ public class FilterTeletravailService implements IFilterTeletravailService {
 	DepartementRepository departementRepository;
 	@Autowired
 	EquipeRepository equipeRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	@Override
 	public Long addFilterTeletravail(FilterTeletravail filterTeletravail) {
@@ -66,6 +70,18 @@ public class FilterTeletravailService implements IFilterTeletravailService {
 		if(equipe != null && filter != null ) {
 			equipe.setFiltre(filter);
 			equipeRepository.save(equipe);
+		}
+	}
+
+	@Override
+	public FilterTeletravail getFilterTeletravailByUserId(Long userId) {
+		User user = userRepository.findById(userId).get();
+		Equipe equipe = user.getEquipe();
+		if(equipe.getFiltre() != null) {
+			return equipe.getFiltre();
+		}
+		else {
+			return equipe.getDepartement().getFiltre();
 		}
 	}
 
