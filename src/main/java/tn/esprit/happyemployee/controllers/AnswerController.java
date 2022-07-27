@@ -22,7 +22,7 @@ public class AnswerController {
 
 	@PostMapping("/addanswer/{question_id}")
 	@ResponseBody
-	public Answer save(@RequestBody Answer answer, @PathVariable long question_id) {
+	public Answer save(@PathVariable long question_id,@RequestBody Answer answer) {
 
 
 		Question question = questionService.find(question_id);
@@ -42,7 +42,7 @@ public class AnswerController {
 
 	@GetMapping("/findanswer/{answer_id}")
 	@ResponseBody
-	public Answer find(@PathVariable Long answer_id) {
+	public Answer findById(@PathVariable Long answer_id) {
 
 		return answerService.find(answer_id);
 	}
@@ -50,8 +50,6 @@ public class AnswerController {
 	@PostMapping("/updateanswer/{answer_id}")
 	@ResponseBody
 	public Answer update(@PathVariable Long answer_id, @RequestBody  Answer answer) {
-
-
 		answer.setIdAnswer(answer_id);
 		return answerService.update(answer);
 	}

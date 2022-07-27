@@ -45,12 +45,12 @@ public class AnswerService implements IAnswerService {
 	}
 
 	@Override
-	public Answer save(Answer answer) throws UnauthorizedActionException {
+	public Answer save(Answer answer) {
 		return answerRepository.save(answer);
 	}
 
 	@Override
-	public Answer update(Answer newAnswer) throws ResourceUnavailableException, UnauthorizedActionException {
+	public Answer update(Answer newAnswer)  {
 		Answer currentAnswer = find(newAnswer.getIdAnswer());
 
 		mergeAnswers(currentAnswer, newAnswer);
@@ -58,10 +58,10 @@ public class AnswerService implements IAnswerService {
 	}
 
 	@Override
-	public void delete(Answer answer) throws ResourceUnavailableException, UnauthorizedActionException {
+	public void delete(Answer answer) {
 
 		if (questionService.checkIsCorrectAnswer(answer.getQuestion(), answer.getIdAnswer())) {
-			throw new ActionRefusedException("The correct answer can't be deleted");
+			logger.error("can not delete " + answer.getText() + " answer");
 		}
 
 		answerRepository.delete(answer);

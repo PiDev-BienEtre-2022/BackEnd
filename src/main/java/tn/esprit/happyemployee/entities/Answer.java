@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
+import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,7 +38,6 @@ public class Answer{
 	@NotNull(message = "No answer text provided.")
 	private String text;
 
-	@JsonIgnore
 	@ManyToOne
 	private Question question;
 
@@ -47,7 +47,7 @@ public class Answer{
 	private Integer order;
 
 	@JsonIgnore
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
+	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_DATETIME",insertable = false,  updatable = false)
 	private Date createdDate;
 
 	public Date getCreatedDate() {
