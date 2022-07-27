@@ -31,7 +31,7 @@ public class AnswerController {
 		return questionService.addAnswerToQuestion(answer, question);
 	}
 
-
+//to do for front
 	@PostMapping("/updateAllanswers")
 	@ResponseBody
 	public void updateAll(@RequestBody List<Answer> answers) {
