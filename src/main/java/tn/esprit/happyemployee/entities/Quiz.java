@@ -63,13 +63,13 @@ public class Quiz{
 		isPublished = published;
 	}
 
-	@JsonIgnore
+
+	@Nullable
 	@OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
 	private List<Question> questions;
 
-	@JsonIgnore
 	@Nullable
-	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_DATETIME", updatable = false)
+	@Column(columnDefinition = "DATETIME", insertable = false, updatable = false)
 	private Date createdDate;
 
 	private Boolean isPublished = false;
@@ -93,7 +93,8 @@ public class Quiz{
 	public void setQuestions(List<Question> exercises) {
 		this.questions = exercises;
 	}
-
+	@JsonIgnore
+	@Nullable
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -118,10 +119,10 @@ public class Quiz{
 		this.name = name;
 	}
 
-	@JsonIgnore
+	/*@JsonIgnore
 	public User getUser() {
 		return getCreatedBy();
-	}
+	}*/
 
 	public Boolean getIsPublished() {
 		return isPublished;

@@ -1,9 +1,6 @@
 package tn.esprit.happyemployee.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.happyemployee.entities.Answer;
 import tn.esprit.happyemployee.entities.Question;
@@ -11,10 +8,9 @@ import tn.esprit.happyemployee.entities.Quiz;
 import tn.esprit.happyemployee.services.QuestionService;
 import tn.esprit.happyemployee.services.QuizService;
 import tn.esprit.happyemployee.services.AnswerService;
-
-import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(QuestionController.ROOT_MAPPING)
 public class QuestionController {

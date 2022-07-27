@@ -38,6 +38,8 @@ public class Answer{
 	@NotNull(message = "No answer text provided.")
 	private String text;
 
+	@JsonIgnore
+	@Nullable
 	@ManyToOne
 	private Question question;
 
@@ -47,7 +49,7 @@ public class Answer{
 	private Integer order;
 
 	@JsonIgnore
-	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_DATETIME",insertable = false,  updatable = false)
+	@Column(columnDefinition = "DATETIME",insertable = false,  updatable = false)
 	private Date createdDate;
 
 	public Date getCreatedDate() {
@@ -69,11 +71,11 @@ public class Answer{
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-
+/*	@Nullable
 	@JsonIgnore
 	public User getUser() {
 		return question.getUser();
-	}
+	}*/
 
 	public Integer getOrder() {
 		return order;
@@ -82,7 +84,7 @@ public class Answer{
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
+	@JsonIgnore
 	@Nullable
 	public User getCreatedBy() {
 		return createdBy;
@@ -95,6 +97,7 @@ public class Answer{
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
+
 	@JsonIgnore
 	@Nullable
 	@ManyToOne

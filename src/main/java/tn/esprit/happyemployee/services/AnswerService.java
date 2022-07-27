@@ -85,4 +85,9 @@ public class AnswerService implements IAnswerService {
 		return answerRepository.countByQuestion(question);
 	}
 
+	@Override
+	public List<Answer> findAll() {
+		return answerRepository.findAll();
+	}
+
 }

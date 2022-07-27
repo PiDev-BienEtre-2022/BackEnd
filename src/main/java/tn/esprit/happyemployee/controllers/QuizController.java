@@ -3,22 +3,16 @@ package tn.esprit.happyemployee.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
 import tn.esprit.happyemployee.entities.Question;
 import tn.esprit.happyemployee.entities.Quiz;
 import tn.esprit.happyemployee.entities.Response;
 import tn.esprit.happyemployee.entities.Result;
 import tn.esprit.happyemployee.services.QuestionService;
 import tn.esprit.happyemployee.services.QuizService;
-
-import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(QuizController.ROOT_MAPPING)
 public class QuizController {

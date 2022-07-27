@@ -63,6 +63,7 @@ public class Question {
 	private String text;
 
 	@JsonIgnore
+	@Nullable
 	@ManyToOne
 	private Quiz quiz;
 
@@ -71,11 +72,10 @@ public class Question {
 	@Column(name = "q_order")
 	private Integer order;
 
-	@JsonIgnore
+	@Nullable
 	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Answer> answers;
 
-	@JsonIgnore
 	@OneToOne
 	private Answer correctAnswer;
 
@@ -113,11 +113,11 @@ public class Question {
 		this.text = text;
 	}
 
-	@JsonIgnore
+/*	@JsonIgnore
 	@Nullable
 	public User getUser() {
 		return quiz.getUser();
-	}
+	}*/
 	@JsonIgnore
 	@Nullable
 	@ManyToOne
@@ -126,7 +126,7 @@ public class Question {
 	public void setCategoriesQuizEtQuestion(CategoriesQuizEtQuestion categoriesQuizEtQuestion) {
 		this.categoriesQuizEtQuestion = categoriesQuizEtQuestion;
 	}
-
+	@JsonIgnore
 	@Nullable
 	public User getCreatedBy() {
 		return createdBy;

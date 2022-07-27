@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.happyemployee.entities.Answer;
 import tn.esprit.happyemployee.entities.Question;
+import tn.esprit.happyemployee.entities.Quiz;
 import tn.esprit.happyemployee.services.AnswerService;
 import tn.esprit.happyemployee.services.QuestionService;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/answers")
 public class AnswerController {
@@ -59,5 +61,10 @@ public class AnswerController {
 	public void delete(@PathVariable Long answer_id) {
 		Answer answer = answerService.find(answer_id);
 		answerService.delete(answer);
+	}
+
+	@GetMapping("/findallanswers")
+	public List<Answer> findAll() {
+			return answerService.findAll();
 	}
 }

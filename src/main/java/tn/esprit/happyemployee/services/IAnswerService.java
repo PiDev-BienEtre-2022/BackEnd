@@ -4,6 +4,7 @@ package tn.esprit.happyemployee.services;
 
 import tn.esprit.happyemployee.entities.Answer;
 import tn.esprit.happyemployee.entities.Question;
+import tn.esprit.happyemployee.entities.Quiz;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface IAnswerService {
 	List<Answer> findAnswersByQuestion(Question question);
 
 	int countAnswersInQuestion(Question question);
+
+	List<Answer> findAll();
 }

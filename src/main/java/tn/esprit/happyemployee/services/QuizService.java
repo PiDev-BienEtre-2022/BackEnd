@@ -52,7 +52,6 @@ public class QuizService implements IQuizService {
 
 		if (quiz == null) {
 			logger.error("Quiz " + id + " not found");
-
 		}
 
 		return quiz;
