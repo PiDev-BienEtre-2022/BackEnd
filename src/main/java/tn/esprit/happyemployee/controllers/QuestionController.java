@@ -16,10 +16,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/challenge/questions")
+@RequestMapping(QuestionController.ROOT_MAPPING)
 public class QuestionController {
 
-	public static final String ROOT_MAPPING = "/challenge/questions";
+	public static final String ROOT_MAPPING = "/questions";
 
 	@Autowired
 	private QuestionService questionService;
@@ -32,13 +32,12 @@ public class QuestionController {
 
 	@PostMapping("/addquestion/{quiz_id}")
 	@ResponseBody
-	public Question save(@Valid Question question, @RequestParam Long quiz_id) {
-
+	public Question save(@RequestBody Question question, @PathVariable Long quiz_id) {
 
 		Quiz quiz = quizService.find(quiz_id);
 		question.setQuiz(quiz);
-
 		return questionService.save(question);
+
 	}
 
 	@PostMapping("/updateAllquestions")
@@ -47,7 +46,6 @@ public class QuestionController {
 		for (int i = 0; i < questions.size(); i++) {
 			Question question = questions.get(i);
 			question.setOrder(i + 1);
-
 			questionService.update(question);
 		}
 	}
@@ -61,7 +59,7 @@ public class QuestionController {
 
 	@PostMapping("/updatequestion/{question_id}")
 	@ResponseBody
-	public Question update(@PathVariable Long question_id, @Valid Question question) {
+	public Question update(@PathVariable Long question_id, @RequestBody  Question question) {
 
 		question.setIdQuestion(question_id);
 		return questionService.update(question);
@@ -74,7 +72,6 @@ public class QuestionController {
 		questionService.delete(question);
 	}
 
-	@RequestMapping(value = "/{question_id}/", method = RequestMethod.GET)
 	@GetMapping("/getanswersforquestions{question_id}")
 	@ResponseBody
 	public List<Answer> findAnswers(@PathVariable Long question_id) {

@@ -2,6 +2,7 @@ package tn.esprit.happyemployee.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.happyemployee.entities.Question;
 import tn.esprit.happyemployee.entities.Quiz;
@@ -18,6 +19,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
 	List<Question> findByQuizAndIsValidTrueOrderByOrderAsc(Quiz quiz);
 
-	@Query(nativeQuery = true, value = "SELECT p FROM Question p LIMIT 1")
-	Question findOne(Long id);
+	@Query(nativeQuery = true, value = "SELECT * FROM Question q where q.id_question=:id LIMIT 1")
+	Question findOne(@Param("id")Long id);
 }

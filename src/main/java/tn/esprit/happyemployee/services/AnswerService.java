@@ -35,14 +35,12 @@ public class AnswerService implements IAnswerService {
 	}
 
 	@Override
-	public Answer find(Long id) throws ResourceUnavailableException {
+	public Answer find(Long id) {
 		Answer answer = answerRepository.findOne(id);
 
 		if (answer == null) {
 			logger.error("Answer " + id + " not found");
-			throw new ResourceUnavailableException("Answer " + id + " not found");
 		}
-
 		return answer;
 	}
 

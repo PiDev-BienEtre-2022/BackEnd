@@ -1,7 +1,6 @@
 package tn.esprit.happyemployee.services;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import tn.esprit.happyemployee.entities.FilterTeletravail;
 import tn.esprit.happyemployee.entities.Quiz;
 import tn.esprit.happyemployee.entities.Response;
 import tn.esprit.happyemployee.entities.Result;
@@ -10,11 +9,11 @@ import java.util.List;
 
 public interface IQuizService {
 //	Quiz save(Quiz quiz, User user);
-Quiz save(Quiz quiz);
+	Quiz addQuiz(Quiz quiz);
 
-	Page<Quiz> findAll(Pageable pageable);
+	List<Quiz> findAll();
 
-	Page<Quiz> findAllPublished(Pageable pageable);
+	List<Quiz> findAllPublished();
 
 //	Page<Quiz> findQuizzesByUser(User user, Pageable pageable);
 
@@ -24,7 +23,7 @@ Quiz save(Quiz quiz);
 
 	void delete(Quiz quiz) ;
 
-	Page<Quiz> search(String query, Pageable pageable);
+	List<Quiz> search(String query);
 
 	Result checkAnswers(Quiz quiz, List<Response> answersBundle);
 

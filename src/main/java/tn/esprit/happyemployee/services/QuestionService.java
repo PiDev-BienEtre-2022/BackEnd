@@ -22,7 +22,7 @@ public class QuestionService implements IQuestionService {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 	private QuestionRepository questionRepository;
 
-	private IAnswerService answerService;
+	private AnswerService answerService;
 
 	@Autowired
 	public QuestionService(QuestionRepository questionRepository, AnswerService answerService) {
@@ -31,7 +31,7 @@ public class QuestionService implements IQuestionService {
 	}
 
 	@Override
-	public Question save(Question question) throws UnauthorizedActionException {
+	public Question save(Question question){
 		int count = questionRepository.countByQuiz(question.getQuiz());
 		question.setOrder(count + 1);
 
@@ -39,12 +39,11 @@ public class QuestionService implements IQuestionService {
 	}
 
 	@Override
-	public Question find(Long id) throws ResourceUnavailableException {
+	public Question find(Long id) {
 		Question question = questionRepository.findOne(id);
 
 		if (question == null) {
 			logger.error("Question " + id + " not found");
-			throw new ResourceUnavailableException("Question " + id + " not found");
 		}
 
 		return question;

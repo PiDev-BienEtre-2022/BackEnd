@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import tn.esprit.happyemployee.domain.enums.Domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -66,7 +67,6 @@ public class User {
 	}
 	public User() {
 	}
-
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

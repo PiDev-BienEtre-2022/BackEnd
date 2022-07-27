@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -34,15 +34,15 @@ public class Question {
 		this.idQuestion = idQuestion;
 	}
 
-	public CategoriesQuizEtQuestion getCategorieQuestion() {
-		return categorieQuestion;
+	public CategoriesQuizEtQuestion getCategoriesQuizEtQuestion() {
+		return categoriesQuizEtQuestion;
 	}
 
-	public void setCategorieQuestion(CategoriesQuizEtQuestion categorieQuestion) {
-		this.categorieQuestion = categorieQuestion;
+	public void setCategorieQuestion(CategoriesQuizEtQuestion categoriesQuizEtQuestion) {
+		this.categoriesQuizEtQuestion = categoriesQuizEtQuestion;
 	}
 
-	public void setCreatedDate(Calendar createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -54,21 +54,24 @@ public class Question {
 		isValid = valid;
 	}
 
-	@NotBlank
-	private CategoriesQuizEtQuestion categorieQuestion;
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private CategoriesQuizEtQuestion categoriesQuizEtQuestion;
 
 	@Size(min = 2, max = 150, message = "The question should be between 2 and 150 characters")
 	@NotNull(message = "Question text not provided")
 	private String text;
 
-	@ManyToOne
 	@JsonIgnore
+	@ManyToOne
 	private Quiz quiz;
 
+	@Nullable
+	@JsonIgnore
 	@Column(name = "q_order")
 	private Integer order;
 
-	//@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Answer> answers;
 
@@ -76,13 +79,13 @@ public class Question {
 	@OneToOne
 	private Answer correctAnswer;
 
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
-	private Calendar createdDate;
-
 	@JsonIgnore
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
+	private Date createdDate;
+
 	private Boolean isValid = false;
 
-	public Calendar getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
@@ -111,8 +114,26 @@ public class Question {
 	}
 
 	@JsonIgnore
+	@Nullable
 	public User getUser() {
 		return quiz.getUser();
+	}
+	@JsonIgnore
+	@Nullable
+	@ManyToOne
+	private User createdBy;
+
+	public void setCategoriesQuizEtQuestion(CategoriesQuizEtQuestion categoriesQuizEtQuestion) {
+		this.categoriesQuizEtQuestion = categoriesQuizEtQuestion;
+	}
+
+	@Nullable
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(@Nullable User createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public Integer getOrder() {

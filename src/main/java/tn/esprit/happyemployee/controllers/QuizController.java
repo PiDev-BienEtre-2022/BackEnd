@@ -3,13 +3,12 @@ package tn.esprit.happyemployee.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
 import tn.esprit.happyemployee.entities.Question;
 import tn.esprit.happyemployee.entities.Quiz;
 import tn.esprit.happyemployee.entities.Response;
@@ -24,7 +23,7 @@ import java.util.List;
 @RequestMapping(QuizController.ROOT_MAPPING)
 public class QuizController {
 
-	public static final String ROOT_MAPPING = "/api/quizzes";
+	public static final String ROOT_MAPPING = "/quizzes";
 	
 	private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
 
@@ -36,34 +35,31 @@ public class QuizController {
 
 	@GetMapping("/findallquiz")
 	@ResponseBody
-	public Page<Quiz> findAll(Pageable pageable,
-							  @RequestParam(required = false, defaultValue = "false") Boolean published) {
+	public List<Quiz> findAll(@RequestParam(required = false, defaultValue = "false") Boolean published) {
 		
 		if (published) {
-			return quizService.findAllPublished(pageable);
+			return quizService.findAllPublished();
 		} else {
-			return quizService.findAll(pageable);
+			return quizService.findAll();
 		}
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@GetMapping("/search")
 	@ResponseBody
-	public Page<Quiz> searchAll(Pageable pageable, @RequestParam(required = true) String filter,
+	public List<Quiz> searchAll(@RequestParam(required = true) String filter,
 			@RequestParam(required = false, defaultValue = "false") Boolean onlyValid) {
 
-		return quizService.search(filter, pageable);
+		return quizService.search(filter);
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
 	@PostMapping("/addquiz")
 	@ResponseBody
-	public Quiz save(@Valid Quiz quiz) {
-
-		logger.debug("The Quiz " + quiz.getName() + " is going to be created");
-
-
-		return quizService.save(quiz);
+	public Quiz save(@RequestBody Quiz quiz) {
+	//	logger.debug("The Quiz " + quiz.getName() + " is going to be created for this"+ quiz.getCategoriesQuizEtQuestion() + "Category");
+		quizService.addQuiz(quiz);
+		return quizService.addQuiz(quiz);
 	}
+
 /*	public Quiz save(@AuthenticationPrincipal AuthenticatedUser user, @Valid Quiz quiz, BindingResult result) {
 
 		logger.debug("The Quiz " + quiz.getName() + " is going to be created");
@@ -73,17 +69,17 @@ public class QuizController {
 		return quizService.save(quiz, user.getUser());
 	}*/
 
-	@RequestMapping(value = "/{quiz_id}", method = RequestMethod.GET)
+
 	@GetMapping("findquiz/{quiz_id}")
 	@ResponseBody
-	public Quiz find(@PathVariable Long quiz_id) {
+	public Quiz findbyId(@PathVariable Long quiz_id) {
 
 		return quizService.find(quiz_id);
 	}
 
 	@PostMapping("/updatequiz/{quiz_id}")
 	@ResponseBody
-	public Quiz update(@PathVariable Long quiz_id, @Valid Quiz quiz) {
+	public Quiz update(@PathVariable Long quiz_id, @RequestBody Quiz quiz) {
 
 
 		quiz.setIdQuiz(quiz_id);
@@ -99,7 +95,7 @@ public class QuizController {
 
 	@GetMapping("findquestionbyquiz/{quiz_id}/questions")
 	@ResponseBody
-	public List<Question> findQuestions(@PathVariable Long quiz_id,
+	public List<Question> findquestionbyquiz(@PathVariable Long quiz_id,
 										@RequestParam(required = false, defaultValue = "false") Boolean onlyValid) {
 
 		Quiz quiz = quizService.find(quiz_id);

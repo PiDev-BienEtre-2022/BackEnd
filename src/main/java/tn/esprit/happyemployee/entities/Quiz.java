@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -26,35 +25,52 @@ public class Quiz{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idQuiz;
 
-	public CategoriesQuizEtQuestion getCategorieQuiz() {
-		return categorieQuiz;
-	}
-
-	public void setCategorieQuiz(CategoriesQuizEtQuestion categorieQuiz) {
-		this.categorieQuiz = categorieQuiz;
-	}
-
-	@NotBlank
-	private CategoriesQuizEtQuestion categorieQuiz;
-
-	@OneToOne
 	@JsonIgnore
+	@Nullable
+	@ManyToOne
 	private User createdBy;
 
 	@Size(min = 2, max = 100, message = "The name must be between 2 and 100 messages.")
 	@NotNull(message = "Please provide a name")
 	private String name;
 
+	public CategoriesQuizEtQuestion getCategoriesQuizEtQuestion() {
+		return categoriesQuizEtQuestion;
+	}
+
+	public void setCategoriesQuizEtQuestion(CategoriesQuizEtQuestion categoriesQuizEtQuestion) {
+		this.categoriesQuizEtQuestion = categoriesQuizEtQuestion;
+	}
+
+
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private CategoriesQuizEtQuestion categoriesQuizEtQuestion;
+
 	@Size(max = 500, message = "The description can't be longer than 500 characters.")
 	@NotNull(message = "Please, provide a description")
 	private String description;
 
-	@OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public void setCreatedDate(@Nullable Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Boolean getPublished() {
+		return isPublished;
+	}
+
+	public void setPublished(Boolean published) {
+		isPublished = published;
+	}
+
 	@JsonIgnore
+	@OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
 	private List<Question> questions;
 
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
-	private Calendar createdDate;
+	@JsonIgnore
+	@Nullable
+	@Column(columnDefinition = "DATETIME DEFAULT CURRENT_DATETIME", updatable = false)
+	private Date createdDate;
 
 	private Boolean isPublished = false;
 
@@ -66,7 +82,7 @@ public class Quiz{
 		this.idQuiz = idQuiz;
 	}
 
-	public Calendar getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 

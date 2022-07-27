@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tn.esprit.happyemployee.domain.enums.CategoriesQuizEtQuestion;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Calendar;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -33,25 +33,24 @@ public class Answer{
 		this.idAnswer = idQuestion;
 	}
 
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	@Size(min = 1, max = 50, message = "The answer should be less than 50 characters")
 	@NotNull(message = "No answer text provided.")
 	private String text;
 
-	@ManyToOne
 	@JsonIgnore
+	@ManyToOne
 	private Question question;
 
+	@JsonIgnore
+	@Nullable
 	@Column(name = "a_order")
 	private Integer order;
 
+	@JsonIgnore
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
-	private Calendar createdDate;
+	private Date createdDate;
 
-	public Calendar getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
@@ -80,10 +79,26 @@ public class Answer{
 		return order;
 	}
 
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	@Nullable
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(@Nullable User createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
-
+	@JsonIgnore
+	@Nullable
+	@ManyToOne
+	private User createdBy;
 	@Override
 	public String toString() {
 		return "Answer [text=" + text + ", question=" + question + ", order=" + order + ", createdDate=" + createdDate

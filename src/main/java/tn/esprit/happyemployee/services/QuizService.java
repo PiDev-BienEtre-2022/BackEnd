@@ -3,7 +3,6 @@ package tn.esprit.happyemployee.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,7 @@ import tn.esprit.happyemployee.entities.Response;
 import tn.esprit.happyemployee.entities.Result;
 import tn.esprit.happyemployee.repositories.QuizRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("QuizService")
@@ -31,19 +31,20 @@ public class QuizService implements IQuizService {
 	}
 
 	@Override
-//	public Quiz save(Quiz quiz, User user) {
-  	public Quiz save(Quiz quiz) {
+//	public Quiz addQuiz(Quiz quiz, User user) {
+  	public Quiz addQuiz(Quiz quiz) {
+		quiz.setCreatedDate(new Date());
 		return quizRepository.save(quiz);
 	}
 
 	@Override
-	public Page<Quiz> findAll(Pageable pageable) {
-		return quizRepository.findAll(pageable);
+	public List<Quiz> findAll() {
+		return quizRepository.findAll();
 	}
 
 	@Override
-	public Page<Quiz> findAllPublished(Pageable pageable) {
-		return quizRepository.findByIsPublishedTrue(pageable);
+	public List<Quiz> findAllPublished() {
+		return quizRepository.findByIsPublishedTrue();
 	}
 
 	@Override
@@ -77,8 +78,8 @@ public class QuizService implements IQuizService {
 	}
 
 	@Override
-	public Page<Quiz> search(String query, Pageable pageable) {
-		return quizRepository.searchByName(query, pageable);
+	public List<Quiz> search(String query) {
+		return quizRepository.searchByName(query);
 	}
 
 /*	@Override

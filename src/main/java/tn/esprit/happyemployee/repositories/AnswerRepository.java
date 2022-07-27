@@ -16,7 +16,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
 	List<Answer> findByQuestionOrderByOrderAsc(Question question);
 
-	@Query(nativeQuery = true, value = "SELECT p FROM Answer p LIMIT 1")
+	@Query(nativeQuery = true, value = "SELECT * FROM Answer a where a.id_answer=:id LIMIT 1")
 	Answer findOne(Long id);
 
 }
